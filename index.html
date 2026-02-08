@@ -1,0 +1,655 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>A Journey of Love ♥</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Cormorant+Garamond:wght@300;400&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --black: #0a0a0a;
+            --rose: #ff1744;
+            --soft-rose: #ff4569;
+            --gold: #ffd700;
+            --white: #ffffff;
+            --gray: #333333;
+        }
+
+        body {
+            font-family: 'Cormorant Garamond', serif;
+            background: var(--black);
+            color: var(--white);
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+
+        /* Animated Background Hearts */
+        .hearts-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+            overflow: hidden;
+        }
+
+        .heart-particle {
+            position: absolute;
+            font-size: 20px;
+            color: var(--rose);
+            opacity: 0;
+            animation: floatHeart 15s infinite;
+        }
+
+        @keyframes floatHeart {
+            0% {
+                opacity: 0;
+                transform: translateY(100vh) rotate(0deg);
+            }
+            10% {
+                opacity: 0.6;
+            }
+            90% {
+                opacity: 0.3;
+            }
+            100% {
+                opacity: 0;
+                transform: translateY(-100vh) rotate(360deg);
+            }
+        }
+
+        .container {
+            position: relative;
+            z-index: 1;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        /* Header */
+        header {
+            text-align: center;
+            padding: 80px 20px;
+            background: linear-gradient(135deg, rgba(255, 23, 68, 0.1) 0%, rgba(0, 0, 0, 0) 100%);
+            border-bottom: 2px solid var(--rose);
+            margin-bottom: 60px;
+            position: relative;
+        }
+
+        h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 4.5em;
+            font-weight: 700;
+            background: linear-gradient(45deg, var(--rose), var(--gold), var(--soft-rose));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 20px;
+            animation: fadeInDown 1s ease-out;
+        }
+
+        .subtitle {
+            font-size: 1.5em;
+            color: var(--white);
+            opacity: 0.8;
+            animation: fadeInUp 1s ease-out 0.3s backwards;
+        }
+
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Puzzle Card */
+        .puzzle-card {
+            background: linear-gradient(135deg, var(--gray) 0%, rgba(20, 20, 20, 0.95) 100%);
+            border: 2px solid var(--rose);
+            border-radius: 20px;
+            padding: 40px;
+            margin: 40px auto;
+            max-width: 700px;
+            box-shadow: 0 10px 40px rgba(255, 23, 68, 0.3);
+            transform: translateY(20px);
+            opacity: 0;
+            animation: slideIn 0.8s ease-out forwards;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .puzzle-card::before {
+            content: '';
+            position: absolute;
+            top: -2px;
+            left: -2px;
+            right: -2px;
+            bottom: -2px;
+            background: linear-gradient(45deg, var(--rose), var(--gold), var(--soft-rose), var(--rose));
+            border-radius: 20px;
+            opacity: 0;
+            transition: opacity 0.3s;
+            z-index: -1;
+        }
+
+        .puzzle-card:hover::before {
+            opacity: 0.5;
+        }
+
+        @keyframes slideIn {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .puzzle-card h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.2em;
+            color: var(--rose);
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .puzzle-number {
+            font-size: 0.6em;
+            color: var(--gold);
+            font-weight: 400;
+        }
+
+        .puzzle-question {
+            font-size: 1.3em;
+            margin-bottom: 25px;
+            text-align: center;
+            color: var(--white);
+            opacity: 0.9;
+        }
+
+        .puzzle-input {
+            width: 100%;
+            padding: 15px 20px;
+            font-size: 1.2em;
+            font-family: 'Cormorant Garamond', serif;
+            background: rgba(255, 255, 255, 0.05);
+            border: 2px solid rgba(255, 23, 68, 0.3);
+            border-radius: 10px;
+            color: var(--white);
+            margin-bottom: 20px;
+            transition: all 0.3s;
+        }
+
+        .puzzle-input:focus {
+            outline: none;
+            border-color: var(--rose);
+            background: rgba(255, 255, 255, 0.1);
+            box-shadow: 0 0 20px rgba(255, 23, 68, 0.4);
+        }
+
+        .submit-btn {
+            width: 100%;
+            padding: 15px;
+            font-size: 1.3em;
+            font-family: 'Playfair Display', serif;
+            font-weight: 600;
+            background: linear-gradient(135deg, var(--rose), var(--soft-rose));
+            color: var(--white);
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 5px 15px rgba(255, 23, 68, 0.4);
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(255, 23, 68, 0.6);
+        }
+
+        .submit-btn:active {
+            transform: translateY(0);
+        }
+
+        /* Content Reveal */
+        .content-reveal {
+            display: none;
+            margin-top: 40px;
+            padding: 30px;
+            background: linear-gradient(135deg, rgba(255, 215, 0, 0.1) 0%, rgba(255, 23, 68, 0.1) 100%);
+            border-radius: 15px;
+            border: 2px solid var(--gold);
+            animation: revealContent 0.8s ease-out;
+        }
+
+        .content-reveal.active {
+            display: block;
+        }
+
+        @keyframes revealContent {
+            from {
+                opacity: 0;
+                transform: scale(0.9);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        .love-message {
+            font-size: 1.4em;
+            text-align: center;
+            margin-bottom: 30px;
+            color: var(--gold);
+            font-style: italic;
+        }
+
+        /* Media Upload Section */
+        .media-section {
+            margin-top: 30px;
+        }
+
+        .media-section h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.8em;
+            color: var(--rose);
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .media-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .media-item {
+            position: relative;
+            border-radius: 15px;
+            overflow: hidden;
+            border: 2px solid var(--rose);
+            background: rgba(255, 255, 255, 0.05);
+            padding: 10px;
+            min-height: 200px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .media-item img,
+        .media-item video {
+            max-width: 100%;
+            max-height: 300px;
+            border-radius: 10px;
+            object-fit: cover;
+        }
+
+        .media-placeholder {
+            text-align: center;
+            color: rgba(255, 255, 255, 0.5);
+            font-size: 1.1em;
+        }
+
+        .upload-instruction {
+            text-align: center;
+            margin-top: 15px;
+            padding: 15px;
+            background: rgba(255, 23, 68, 0.1);
+            border-radius: 10px;
+            font-size: 0.95em;
+            color: var(--white);
+            opacity: 0.8;
+        }
+
+        /* Locked/Unlocked Status */
+        .status-badge {
+            display: inline-block;
+            padding: 8px 20px;
+            border-radius: 20px;
+            font-size: 0.9em;
+            font-weight: 600;
+            margin-bottom: 15px;
+        }
+
+        .locked {
+            background: rgba(255, 23, 68, 0.2);
+            color: var(--rose);
+            border: 1px solid var(--rose);
+        }
+
+        .unlocked {
+            background: rgba(255, 215, 0, 0.2);
+            color: var(--gold);
+            border: 1px solid var(--gold);
+        }
+
+        .error-message {
+            color: var(--rose);
+            text-align: center;
+            margin-top: 10px;
+            font-size: 1.1em;
+            display: none;
+        }
+
+        .error-message.show {
+            display: block;
+            animation: shake 0.5s;
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-10px); }
+            75% { transform: translateX(10px); }
+        }
+
+        /* Progress Bar */
+        .progress-container {
+            max-width: 600px;
+            margin: 40px auto;
+            text-align: center;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            overflow: hidden;
+            margin-top: 15px;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--rose), var(--gold));
+            width: 0%;
+            transition: width 0.8s ease-out;
+        }
+
+        .progress-text {
+            font-size: 1.2em;
+            color: var(--gold);
+            margin-bottom: 10px;
+        }
+
+        footer {
+            text-align: center;
+            padding: 60px 20px 40px;
+            margin-top: 80px;
+            border-top: 2px solid var(--rose);
+        }
+
+        footer p {
+            font-size: 1.3em;
+            color: var(--rose);
+            font-style: italic;
+        }
+
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 3em;
+            }
+
+            .puzzle-card {
+                padding: 25px;
+            }
+
+            .media-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Animated Hearts Background -->
+    <div class="hearts-bg" id="heartsContainer"></div>
+
+    <header>
+        <h1>Journey to My Heart ♥</h1>
+        <p class="subtitle">Solve each puzzle to unlock a special memory</p>
+    </header>
+
+    <div class="container">
+        <!-- Progress Tracker -->
+        <div class="progress-container">
+            <p class="progress-text">Progress: <span id="progressCount">0</span> of 3 unlocked</p>
+            <div class="progress-bar">
+                <div class="progress-fill" id="progressFill"></div>
+            </div>
+        </div>
+
+        <!-- Puzzle 1 -->
+        <div class="puzzle-card" style="animation-delay: 0.2s">
+            <span class="status-badge locked" id="status1">🔒 Locked</span>
+            <h2><span class="puzzle-number">Puzzle One</span><br>First Date</h2>
+            <p class="puzzle-question">Where did we have our first date?</p>
+            <input type="text" class="puzzle-input" id="answer1" placeholder="Enter your answer...">
+            <button class="submit-btn" onclick="checkAnswer(1)">Unlock Memory</button>
+            <p class="error-message" id="error1">Wrong, we met at the restaurant</p>
+            
+            <div class="content-reveal" id="content1">
+                <p class="love-message">"The moment I saw you, I knew my life would never be the same."</p>
+                <div class="media-section">
+                    <h3>Our First Date Memories</h3>
+                    <div class="media-grid" id="media1">
+                        <div class="media-item">
+                            <img src="both.jpeg" alt="Our first date at the restaurant">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Puzzle 2 -->
+        <div class="puzzle-card" style="animation-delay: 0.4s">
+            <span class="status-badge locked" id="status2">🔒 Locked</span>
+            <h2><span class="puzzle-number">Puzzle Two</span><br>Fine Bobo</h2>
+            <p class="puzzle-question">Who is the most handsome guy in the world?</p>
+            <input type="text" class="puzzle-input" id="answer2" placeholder="Enter your answer...">
+            <button class="submit-btn" onclick="checkAnswer(2)">Unlock Memory</button>
+            <p class="error-message" id="error2">You are the most handsome guy in the world</p>
+            
+            <div class="content-reveal" id="content2">
+                <p class="love-message">"Puzzle Two."</p>
+                <div class="media-section">
+                    <h3>Ain't you so handsome?</h3>
+                    <div class="media-grid" id="media2">
+                        <div class="media-item">
+                            <img src="you.jpeg" alt="You are the most handsome">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Puzzle 3 -->
+        <div class="puzzle-card" style="animation-delay: 0.6s">
+            <span class="status-badge locked" id="status3">🔒 Locked</span>
+            <h2><span class="puzzle-number">Puzzle Three</span><br>Take a guess</h2>
+            <p class="puzzle-question">Who is the most beautiful girl in the world?</p>
+            <input type="text" class="puzzle-input" id="answer3" placeholder="Enter your answer...">
+            <button class="submit-btn" onclick="checkAnswer(3)">Unlock Memory</button>
+            <p class="error-message" id="error3">It is you baby</p>
+            
+            <div class="content-reveal" id="content3">
+                <p class="love-message">"With you, I've found my forever. Here's to all our tomorrows together."</p>
+                <div class="media-section">
+                    <h3>Chubs</h3>
+                    <div class="media-grid" id="media3">
+                        <div class="media-item">
+                            <img src="gown.jpeg" alt="Most beautiful girl">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div style="text-align: center; margin: 60px 20px; max-width: 800px; margin-left: auto; margin-right: auto;">
+        <video width="100%" controls autoplay muted style="border-radius: 15px; border: 2px solid var(--rose);">
+            <source src="vid.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
+    </div>
+
+    <div style="text-align: center; margin: 60px 20px; max-width: 800px; margin-left: auto; margin-right: auto;">
+        <video width="100%" controls autoplay muted style="border-radius: 15px; border: 2px solid var(--rose);">
+            <source src="com.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
+    </div>
+
+    <div style="text-align: center; margin: 60px 20px;">
+        <a href="https://wa.link/i851lr" target="_blank" style="display: inline-block; padding: 15px 40px; font-size: 1.3em; font-family: 'Playfair Display', serif; font-weight: 600; background: linear-gradient(135deg, var(--rose), var(--soft-rose)); color: var(--white); border: none; border-radius: 10px; cursor: pointer; text-decoration: none; box-shadow: 0 5px 15px rgba(255, 23, 68, 0.4); transition: all 0.3s;">
+            Click me to get your ice-cream
+        </a>
+    </div>
+
+    <footer>
+        <p>Forever yours, with all my love ♥</p>
+    </footer>
+
+    <script>
+        // Puzzle answers - CUSTOMIZE THESE!
+        const answers = {
+            1: "restaurant", // Change to your actual answer (lowercase)
+            2: "grace", // Change to your actual answer (lowercase)
+            3: "me" // Change to your actual answer (lowercase)
+        };
+
+        let unlockedCount = 0;
+
+        // Generate floating hearts
+        function createHearts() {
+            const container = document.getElementById('heartsContainer');
+            for (let i = 0; i < 20; i++) {
+                const heart = document.createElement('div');
+                heart.className = 'heart-particle';
+                heart.innerHTML = '♥';
+                heart.style.left = Math.random() * 100 + '%';
+                heart.style.animationDelay = Math.random() * 15 + 's';
+                heart.style.fontSize = (Math.random() * 20 + 15) + 'px';
+                container.appendChild(heart);
+            }
+        }
+
+        function checkAnswer(puzzleNumber) {
+            const input = document.getElementById('answer' + puzzleNumber);
+            const userAnswer = input.value.trim().toLowerCase();
+            const correctAnswer = answers[puzzleNumber];
+            const error = document.getElementById('error' + puzzleNumber);
+            const content = document.getElementById('content' + puzzleNumber);
+            const status = document.getElementById('status' + puzzleNumber);
+
+            // Always show content with picture
+            content.classList.add('active');
+
+            if (userAnswer === correctAnswer) {
+                // Correct answer
+                error.classList.remove('show');
+                status.textContent = '✓ Unlocked';
+                status.className = 'status-badge unlocked';
+                input.disabled = true;
+                
+                // Update progress
+                if (!content.classList.contains('unlocked-already')) {
+                    content.classList.add('unlocked-already');
+                    unlockedCount++;
+                    updateProgress();
+                }
+
+                // Celebration effect
+                createCelebration();
+            } else {
+                // Wrong answer - show error message with picture
+                error.classList.add('show');
+                setTimeout(() => {
+                    error.classList.remove('show');
+                }, 2000);
+            }
+        }
+
+        function updateProgress() {
+            const progressCount = document.getElementById('progressCount');
+            const progressFill = document.getElementById('progressFill');
+            
+            progressCount.textContent = unlockedCount;
+            progressFill.style.width = (unlockedCount / 3 * 100) + '%';
+        }
+
+        function createCelebration() {
+            // Create temporary celebration hearts
+            for (let i = 0; i < 10; i++) {
+                const heart = document.createElement('div');
+                heart.innerHTML = '♥';
+                heart.style.position = 'fixed';
+                heart.style.left = '50%';
+                heart.style.top = '50%';
+                heart.style.color = '#ff1744';
+                heart.style.fontSize = '30px';
+                heart.style.pointerEvents = 'none';
+                heart.style.zIndex = '1000';
+                heart.style.animation = 'celebrateHeart 2s ease-out forwards';
+                
+                const angle = (Math.PI * 2 * i) / 10;
+                heart.style.setProperty('--tx', Math.cos(angle) * 200 + 'px');
+                heart.style.setProperty('--ty', Math.sin(angle) * 200 + 'px');
+                
+                document.body.appendChild(heart);
+                
+                setTimeout(() => heart.remove(), 2000);
+            }
+        }
+
+        // Add celebration animation
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes celebrateHeart {
+                0% {
+                    transform: translate(-50%, -50%) scale(0);
+                    opacity: 1;
+                }
+                100% {
+                    transform: translate(calc(-50% + var(--tx)), calc(-50% + var(--ty))) scale(1);
+                    opacity: 0;
+                }
+            }
+        `;
+        document.head.appendChild(style);
+
+        // Initialize
+        createHearts();
+
+        // Allow Enter key to submit
+        document.querySelectorAll('.puzzle-input').forEach((input, index) => {
+            input.addEventListener('keypress', (e) => {
+                if (e.key === 'Enter') {
+                    checkAnswer(index + 1);
+                }
+            });
+        });
+    </script>
+</body>
+</html>
